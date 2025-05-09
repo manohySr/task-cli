@@ -22,11 +22,11 @@ dependencies = [
 
 # Explicitly list the packages to include
 [tool.setuptools]
-packages = ["cli", "core", "core.entities", "core.repositories", "main"]
+packages = ["cli", "core", "core.entities", "core.repositories", "app"]
 package-dir = { "" = "." }
 
 [project.scripts]
-task-cli = "main.main:run"
+task-cli = "app.main:run"
 
 # Pytest configuration - completely separate from [project.scripts]
 [tool.pytest.ini_options]
