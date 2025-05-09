@@ -5,34 +5,29 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "task-tracker"
 version = "0.1.0"
-authors = [
-    { name = "manohySr", email = "manohyrajaonah@gmail.com" },
-]
+authors = [{ name = "manohySr", email = "manohyrajaonah@gmail.com" }]
 description = "A task tracking application"
 requires-python = ">=3.8"
 classifiers = [
-    "Programming Language :: Python :: 3",
-    "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Operating System :: OS Independent",
 ]
 dependencies = [
-    "typer>=0.15.3",
-    "rich>=14.0.0",
-    "pydantic>=2.11.4",
-    "shellingham>=1.5.4",
-    "typing_extensions>=4.13.2",
+  "typer>=0.15.3",
+  "rich>=14.0.0",
+  "pydantic>=2.11.4",
+  "shellingham>=1.5.4",
+  "typing_extensions>=4.13.2",
 ]
 
 # Explicitly list the packages to include
 [tool.setuptools]
-packages = ["cli", "core", "core.entities"]
-package-dir = {"" = "."}
+packages = ["cli", "core", "core.entities", "core.repositories", "main"]
+package-dir = { "" = "." }
 
 [project.scripts]
-task-cli = "main:run"
+task-cli = "main.main:run"
 
 # Pytest configuration - completely separate from [project.scripts]
 [tool.pytest.ini_options]
-pythonpath = [
-    "."
-]
-
+pythonpath = ["."]
