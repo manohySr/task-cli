@@ -1,8 +1,8 @@
-from cli.commands import app
+from cli.commands import task_manager
 
 
 def run():
-    app()
+    task_manager.run()
 
 
 if __name__ == "__main__":
