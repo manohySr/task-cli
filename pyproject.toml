@@ -21,9 +21,14 @@ dependencies = [
 ]
 
 # Explicitly list the packages to include
+
+
 [tool.setuptools]
 packages = ["cli", "core", "core.entities", "core.repositories", "app"]
 package-dir = { "" = "." }
+
+[tool.poetry]
+include = ["core/repositories/data.json"]
 
 [project.scripts]
 task-cli = "app.main:run"
