@@ -24,7 +24,7 @@ class TaskManager:
             DESCRIPTION: The description of the task to add.
             """
             task = self.task_service.add_task(description)
-            typer.echo(f"✅ Added task")
+            typer.echo(f"✅ {task}")
 
         @self.app.command()
         def update(task_id: int, new_description: str):
@@ -34,10 +34,9 @@ class TaskManager:
             TASK_ID: The ID of the task to update.
             NEW_DESCRIPTION: The new description for the task.
             """
-        
+
             task = self.task_service.update_task(task_id, new_description)
             typer.echo(f"✅ Updated task")
-      
 
         @self.app.command()
         def delete(task_id: int):
@@ -48,7 +47,6 @@ class TaskManager:
             """
             self.task_service.delete_task(task_id)
             typer.echo(f"✅ Deleted task")
-               
 
         @self.app.command(name="list")
         def list_tasks():

@@ -24,7 +24,7 @@ dependencies = [
 
 
 [tool.setuptools]
-packages = ["cli", "core", "core.entities", "core.repositories", "app"]
+packages = ["cli", "core", "core.entities", "core.services", "core.repositories", "app"]
 package-dir = { "" = "." }
 
 [tool.poetry]
