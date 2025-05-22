@@ -11,7 +11,6 @@ class TaskService:
         self.file_path = os.path.join(
             os.path.dirname(__file__), "..", "..", "core", "repositories", "data.json"
         )
-        self._ensure_data_file_exists()
 
     def _ensure_data_file_exists(self):
         """Ensure the data file exists with proper structure"""
@@ -30,6 +29,8 @@ class TaskService:
             return {"tasks": [], "last_id": 0}
 
     def _save_data(self, data: dict):
+        self._ensure_data_file_exists()
+
         """Save data to JSON file"""
         with open(self.file_path, "w") as f:
             json.dump(data, f, indent=2)
@@ -43,36 +44,33 @@ class TaskService:
     def add_task(self, description: str) -> Task:
         """
         Add a new task to the system.
-        
+
         Args:
             description: The description of the task to add
-            
+
         Returns:
             Task: The newly created task
-            
+
         Raises:
             Exception: If there's an error adding the task
         """
         try:
             # Load existing data
             data = self._load_data()
-            
+
             # Create new task with next available ID
             new_id = self._get_next_id()
-            task = Task(
-                description=description,
-                id=new_id
-            )
-            
+            task = Task(description=description, id=new_id)
+
             # Add task to the list
             data["tasks"].append(task.model_dump())
             data["last_id"] = new_id
-            
+
             # Save updated data
             self._save_data(data)
-            
+
             return task
-            
+
         except Exception as e:
             raise Exception(f"Error adding task: {str(e)}")
 

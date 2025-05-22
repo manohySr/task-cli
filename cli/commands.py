@@ -24,7 +24,7 @@ class TaskManager:
             DESCRIPTION: The description of the task to add.
             """
             task = self.task_service.add_task(description)
-            typer.echo(f"✅ {task}")
+            typer.echo(f"Task added successfully (ID: {task.id})")
 
         @self.app.command()
         def update(task_id: int, new_description: str):
