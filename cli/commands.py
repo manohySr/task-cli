@@ -52,7 +52,16 @@ class TaskManager:
         def list_tasks():
             """List all tasks"""
             tasks = self.task_service.list_tasks()
-            typer.echo("\n📋 Task List:")
+            typer.echo(f"\n📋 Task List:")
+            # Print the header
+            print(f"\t{'ID':<5} {'Description':<20} {'Status':<15}")
+            print("\t" + "-" * 50)  # Separator line
+
+            # Print each task in a formatted way
+            for task in tasks:
+                print(
+                    f"\t{task['id']:<5} {task['description']:<20} {task['status']:<15}"
+                )
 
         @self.app.command()
         def mark_in_progress(task_id: int):
