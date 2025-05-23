@@ -1,6 +1,6 @@
 # Task Tracker CLI
 
-A simple and efficient command-line task management tool to help you organize your tasks.
+A simple and efficient command-line task management tool to help you organize your tasks. This project is based on the [Task Tracker CLI project](https://roadmap.sh/projects/task-tracker) from roadmap.sh.
 
 ## Features
 
@@ -12,6 +12,12 @@ A simple and efficient command-line task management tool to help you organize yo
 
 ## Installation
 
+### Quick Install (For Users)
+```bash
+pip install git+https://github.com/manohySr/task-cli.git
+```
+
+### Development Setup (For Contributors)
 1. Clone the repository:
    ```bash
    git clone https://github.com/manohySr/task-cli.git
