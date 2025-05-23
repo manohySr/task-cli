@@ -80,7 +80,7 @@ class TaskManager:
             TASK_ID: The ID of the task to mark as in progress.
             """
             task = self.task_service.mark_in_progress(task_id)
-            typer.echo("\n📋 Task in progress...")
+            typer.echo(f"📋 Task '{task.description}' is now in progress...")
 
         @self.app.command()
         def mark_done(task_id: int):
@@ -90,7 +90,7 @@ class TaskManager:
             TASK_ID: The ID of the task to mark as done.
             """
             task = self.task_service.mark_done(task_id)
-            typer.echo("\n📋 Task done!")
+            typer.echo(f"📋 Task '{task.description}' is now done!")
 
     def run(self):
         self.app()
