@@ -80,10 +80,18 @@ class TaskService:
     def delete_task(self, task_id: int):
         pass
 
-    def list_tasks(self):
+    def list_tasks(self, status: Optional[TaskStatus] = None):
         with open(self.file_path, "r") as f:
             data = json.load(f)
             tasks = data["tasks"]
+
+        if status:
+            valid_statuses = [s.value for s in TaskStatus]
+            if status not in valid_statuses:
+                raise ValueError(f"Invalid status: {status}")
+
+            tasks = [task for task in tasks if task["status"] == status]
+
         return tasks
 
     def mark_in_progress(self, task_id: int):
