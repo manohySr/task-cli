@@ -64,9 +64,25 @@ class TaskService:
     def update_task(self, task_id: int, new_description: str):
         pass
 
-    def delete_task(self, task_id: int):
+    def delete_task(self, task_id: int) -> Task:
+        data = self._load_data()
+        tasks = data["tasks"]
+
+        # Find and remove the task
+        task_to_delete = None
+        for task in tasks:
+            if task["id"] == task_id:
+                task_to_delete = task
+                break
+
+        if not task_to_delete:
+            raise ValueError(f"Task with ID {task_id} not found")
+
+        tasks.remove(task_to_delete)
         
-        pass
+        # Save updated data
+        self._save_data(data)
+        return task_to_delete
 
     def list_tasks(self, status: Optional[TaskStatus] = None):
         data = self._load_data()

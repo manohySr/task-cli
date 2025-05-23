@@ -45,8 +45,11 @@ class TaskManager:
 
             TASK_ID: The ID of the task to delete.
             """
-            self.task_service.delete_task(task_id)
-            typer.echo(f"✅ Deleted task")
+            try:    
+                deleted_task = self.task_service.delete_task(task_id)
+                typer.echo(f"✅ Deleted task: {deleted_task['description']}")
+            except ValueError as e:
+                typer.echo(f"❌ {e}")
 
         @self.app.command(name="list")
         def list_tasks(status: str = typer.Option(None)):
