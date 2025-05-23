@@ -48,14 +48,21 @@ class TaskManager:
             self.task_service.delete_task(task_id)
             typer.echo(f"✅ Deleted task")
 
-        # TODO: filter listing by todo - done - in progress
         @self.app.command(name="list")
-        def list_tasks(status: str = typer.Option(None, help="Filter by status")):
+        def list_tasks(status: str = typer.Option(None)):
             """List all tasks"""
             tasks = self.task_service.list_tasks()
 
             if status:
-                tasks = [tasks for task in tasks if task["status"].lower() == status.]
+                # Check if the provided status is valid
+                valid_statuses = [s.value for s in TaskStatus]
+                if status not in valid_statuses:
+                    typer.echo(f"❌ {status} is not a valid status")
+                    typer.echo(f"Use one of the following: {', '.join(valid_statuses)}")
+                    return
+                
+                # Filter tasks by status
+                tasks = [task for task in tasks if task["status"] == status]
 
             typer.echo(f"\n📋 Task List:")
             # Print the header
