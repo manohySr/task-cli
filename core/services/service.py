@@ -42,20 +42,7 @@ class TaskService:
         return next_id
 
     def add_task(self, description: str) -> Task:
-        """
-        Add a new task to the system.
-
-        Args:
-            description: The description of the task to add
-
-        Returns:
-            Task: The newly created task
-
-        Raises:
-            Exception: If there's an error adding the task
-        """
         try:
-            # Load existing data
             data = self._load_data()
 
             # Create new task with next available ID
@@ -78,12 +65,12 @@ class TaskService:
         pass
 
     def delete_task(self, task_id: int):
+        
         pass
 
     def list_tasks(self, status: Optional[TaskStatus] = None):
-        with open(self.file_path, "r") as f:
-            data = json.load(f)
-            tasks = data["tasks"]
+        data = self._load_data()
+        tasks = data["tasks"]
 
         if status:
             valid_statuses = [s.value for s in TaskStatus]
