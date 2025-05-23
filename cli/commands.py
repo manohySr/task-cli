@@ -14,7 +14,7 @@ class TaskManager:
         @self.app.command(name="hello")
         def hello():
             """Say hello to the world"""
-            typer.echo("Hello World!")
+            typer.echo("👋 Hello World!")
 
         @self.app.command()
         def add(description: str):
@@ -23,8 +23,11 @@ class TaskManager:
 
             DESCRIPTION: The description of the task to add.
             """
-            task = self.task_service.add_task(description)
-            typer.echo(f"Task added successfully (ID: {task.id})")
+            try:
+                task = self.task_service.add_task(description)
+                typer.echo(f"✅ Task added successfully (ID: {task.id})")
+            except Exception as e:
+                typer.echo(f"❌ Error adding task: {e}")
 
         @self.app.command()
         def update(task_id: int, new_description: str):
@@ -34,9 +37,13 @@ class TaskManager:
             TASK_ID: The ID of the task to update.
             NEW_DESCRIPTION: The new description for the task.
             """
-
-            task = self.task_service.update_task(task_id, new_description)
-            typer.echo(f"✅ Updated task")
+            try:
+                task = self.task_service.update_task(task_id, new_description)
+                typer.echo(f"✅ Task '{task.description}' updated successfully")
+            except ValueError as e:
+                typer.echo(f"❌ {e}")
+            except Exception as e:
+                typer.echo(f"❌ Error updating task: {e}")
 
         @self.app.command()
         def delete(task_id: int):
@@ -47,9 +54,11 @@ class TaskManager:
             """
             try:    
                 deleted_task = self.task_service.delete_task(task_id)
-                typer.echo(f"✅ Deleted task: {deleted_task['description']}")
+                typer.echo(f"✅ Task '{deleted_task.description}' deleted successfully")
             except ValueError as e:
                 typer.echo(f"❌ {e}")
+            except Exception as e:
+                typer.echo(f"❌ Error deleting task: {e}")
 
         @self.app.command(name="list")
         def list_tasks(status: str = typer.Option(None)):
@@ -59,6 +68,13 @@ class TaskManager:
             except ValueError as e:
                 typer.echo(f"❌ {e}")
                 typer.echo(f"Use one of the following: {', '.join([s.value for s in TaskStatus])}")
+                return
+            except Exception as e:
+                typer.echo(f"❌ Error listing tasks: {e}")
+                return
+
+            if not tasks:
+                typer.echo("📝 No tasks found")
                 return
 
             typer.echo(f"\n📋 Task List:")
@@ -79,8 +95,13 @@ class TaskManager:
 
             TASK_ID: The ID of the task to mark as in progress.
             """
-            task = self.task_service.mark_in_progress(task_id)
-            typer.echo(f"📋 Task '{task.description}' is now in progress...")
+            try:
+                task = self.task_service.mark_in_progress(task_id)
+                typer.echo(f"🔄 Task '{task.description}' is now in progress...")
+            except ValueError as e:
+                typer.echo(f"❌ {e}")
+            except Exception as e:
+                typer.echo(f"❌ Error updating task status: {e}")
 
         @self.app.command()
         def mark_done(task_id: int):
@@ -89,8 +110,13 @@ class TaskManager:
 
             TASK_ID: The ID of the task to mark as done.
             """
-            task = self.task_service.mark_done(task_id)
-            typer.echo(f"📋 Task '{task.description}' is now done!")
+            try:
+                task = self.task_service.mark_done(task_id)
+                typer.echo(f"✅ Task '{task.description}' is now done!")
+            except ValueError as e:
+                typer.echo(f"❌ {e}")
+            except Exception as e:
+                typer.echo(f"❌ Error updating task status: {e}")
 
     def run(self):
         self.app()
